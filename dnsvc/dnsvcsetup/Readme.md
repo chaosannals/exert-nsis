@@ -1,5 +1,9 @@
 # Visual Studio Installer
 
+## 依赖 .Net Framework 3.5
+
+dotnetfx35.exe
+
 ## 用户界面 定制流程
 
 设置完界面后 在自定义动作可以设置得到界面的参数。
