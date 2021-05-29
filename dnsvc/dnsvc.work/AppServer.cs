@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Resources;
+using System.Security.Authentication;
+using System.Security.Cryptography.X509Certificates;
 using WebSocketSharp.Server;
 
 namespace DnSvc.Work
@@ -32,6 +35,10 @@ namespace DnSvc.Work
         {
             int port = Setting.GetInt("service", "port", 12345);
             Server = new HttpServer(IPAddress.Any, port);
+            // .net framework 3.5 低版本无此枚举，强转换，TLS 1.2 的枚举。
+            Server.SslConfiguration.EnabledSslProtocols = (SslProtocols)0xC00;
+            ResourceManager manager = new ResourceManager("DnSvc.Work.Properties.Resources", typeof(AppServer).Assembly);
+            Server.SslConfiguration.ServerCertificate = new X509Certificate2(manager.GetObject("dnsvc.pfx") as byte[]);
             Server.AddWebSocketService<Dispatcher>("/api");
             Server.OnGet += new EventHandler<HttpRequestEventArgs>(OutputWww);
         }
