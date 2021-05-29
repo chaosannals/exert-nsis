@@ -44,7 +44,7 @@ namespace DnSvc
             {
                 if (folder == null)
                 {
-                    folder = Path.Combine(DotnetService.Here, "log");
+                    folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
                     if (!Directory.Exists(folder))
                     {
                         Directory.CreateDirectory(folder);
@@ -56,7 +56,7 @@ namespace DnSvc
 
         public static void Finally()
         {
-            ticker.Stop();
+            ticker.Enabled = false;
             lock (contents)
             {
                 if (contents.Count > 0)

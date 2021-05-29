@@ -10,7 +10,7 @@ namespace DnSvc
     /// </summary>
     public class Setting
     {
-        public static string FilePath { get { return Path.Combine(DotnetService.Here, "dnsvc.ini"); } }
+        public static string FilePath { get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dnsvc.ini"); } }
 
         /// <summary>
         /// 获取值
