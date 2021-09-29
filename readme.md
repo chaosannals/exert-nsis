@@ -1,6 +1,8 @@
 # exert-nsis
 
-*.nsi 文件必须以 UTF-8 with BOM 编码。
+安装 NSIS 3.x 版本，之后会有一个图形软件用于编译。
+
+注：*.nsi 文件必须以 UTF-8 with BOM 编码。
 
 ## DnSvc
 

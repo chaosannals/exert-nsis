@@ -7,6 +7,10 @@ OutFile "dnsvc-setup.exe"
 ; 执行需要用户级别
 RequestExecutionLevel admin
 
+;强制压缩
+SetCompressor /SOLID lzma
+SetCompress force
+
 ; 是否使用 Unicode
 Unicode True
 
@@ -30,7 +34,7 @@ UninstPage instfiles ; 固定界面，卸载文件。
 ; ------------------------------------
 
 Section "Install"
-    SectionIn RO
+    SectionIn RO ; 只读，用户不可修改。
 
     SetOutPath $INSTDIR
 
@@ -38,6 +42,9 @@ Section "Install"
     File /oname=dotnetfx35.exe "dotnetfx35.exe"
     File /oname=dnsvc.exe "dnsvc\bin\Release\dnsvc.exe"
     File /oname=websocket-sharp.dll "dnsvc\bin\Release\websocket-sharp.dll"
+
+    ; 下载文件
+    NSISdl::download "http://nginx.org/download/nginx-1.21.3.zip" "nginx-1.21.3.zip"
 
     ; 添加卸载程序
     WriteUninstaller "$INSTDIR\uninstall.exe"
