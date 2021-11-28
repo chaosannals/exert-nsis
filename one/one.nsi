@@ -1,8 +1,12 @@
-﻿; 安装器名称
-Name "OneSetup"
+﻿!define ONE_NAME "One"
+!define ONE_VERSION "0.1.0"
+!define ONE_SETUP_NAME "one-${ONE_VERSION}-setup.exe"
+
+; 安装器名称
+Name "One Setup"
 
 ; 安装器文件名
-OutFile "one-setup.exe"
+OutFile ${ONE_SETUP_NAME}
 
 ; 执行需要用户级别
 RequestExecutionLevel admin
@@ -40,19 +44,26 @@ Section "Install"
     ; 添加卸载程序
     WriteUninstaller "$INSTDIR\uninstall.exe"
 
+    ; 添加快捷方式
+    ; 快捷文件.lnk 目标文件 参数 [图标文件] [图标索引号] [启动选项] [键盘快捷键] [描述]
+    ;CreateShortCut "$DESKTOP\One.lnk" "$INSTDIR\one.bat" "" "$INSTDIR\one.ico"
+    CreateShortCut "$DESKTOP\One.lnk" "$INSTDIR\one.bat"
+
     ; 添加注册表，加入“添加删除程序”
     ; 图标路径，可以直接指向带图标的 exe 或者 ico 文件
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\One" "DisplayIcon" "$INSTDIR\one.ico"
     ; 程序名
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\One" "DisplayName" "One Nsis Demo"
     ; 版本信息
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\One" "DisplayVersion" "1.0"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\One" "DisplayVersion" ${ONE_VERSION}
     ; 卸载程序路径
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\One" "UninstallString" "$INSTDIR\uninstall.exe"
 SectionEnd
 
 ; 卸载段脚本
 Section "Uninstall"
+    ; 删除快捷方式
+    Delete "$DESKTOP\One.lnk"
     ; 删除注册表信息
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\One"
     ; 删除目录
