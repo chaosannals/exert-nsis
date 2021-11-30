@@ -1,6 +1,10 @@
 ﻿!define ONE_NAME "One"
-!define ONE_VERSION "0.1.0"
+
+!ifdef ONE_DEV
+!define ONE_SETUP_NAME "one-${ONE_VERSION}-dev-setup.exe"
+!else
 !define ONE_SETUP_NAME "one-${ONE_VERSION}-setup.exe"
+!endif
 
 ; 安装器名称
 Name "One Setup"
@@ -39,7 +43,11 @@ Section "Install"
     SetOutPath $INSTDIR
 
     ; /r 指定匹配复制到顶层，中间可以加入 /x "" 多个来排除
+    !ifdef ONE_DEV
     File /r /x "*setup.exe" /x "*.nsi" "*"
+    !else
+    File /r /x "*setup.exe" /x "*.nsi" /x "dev" "*"
+    !endif
 
     ; 添加卸载程序
     WriteUninstaller "$INSTDIR\uninstall.exe"

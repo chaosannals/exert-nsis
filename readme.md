@@ -4,6 +4,12 @@
 
 注：*.nsi 文件必须以 UTF-8 with BOM 编码。
 
+[官方文档](https://nsis.sourceforge.io/Docs/)
+
+- makensis.exe 命令行
+- makensisw.exe 图形界面
+- nsis.exe 会启动 makensisw 图形界面。
+
 ## DnSvc
 
 - 需要自行下载 dotnetfx35.exe（.Net Framework 3.5 SP1 ）安装包。
